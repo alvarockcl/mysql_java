@@ -30,4 +30,8 @@ CREATE TABLE usuario(
 INSERT INTO usuario (usuario, clave, nombre, tipousuario, estado) values
 ('afuentes','1234','Administrador','Alvaro Fuentes','V');
 
+-- Permitir mysql operaciones update
+SET SQL_SAFE_UPDATES = 0;
 -- ***********************************************************************************
+
+
