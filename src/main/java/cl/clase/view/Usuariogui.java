@@ -1,5 +1,9 @@
 package cl.clase.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -9,8 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import cl.clase.querys.UsuarioQuery;
+import cl.fuentes.db.Mysqlconn;
+
 public class Usuariogui extends JFrame{
   
+	private Mysqlconn con;
+	private UsuarioQuery query;
 	
 	JLabel lbUsuario;
 	JTextField txtUsuario;
@@ -27,6 +36,13 @@ public class Usuariogui extends JFrame{
 	
 	public Usuariogui() {
 		super("Formulario Usuario");
+		con = new Mysqlconn("localhost", "ventas", "usuventas", "usupassword");
+		try {
+			con.open();
+		} catch (Exception e) {
+			System.out.println("No se ha establecido la conexión a la db");
+		}
+		UsuarioQuery usuquery = new UsuarioQuery(con);
 		iniciarComponentes();
 	}
 	
@@ -83,8 +99,47 @@ public class Usuariogui extends JFrame{
 		cbTipousuario.setLocation(100,140);
 		cbTipousuario.setSize(100, 20);
 		
+		btnAgregar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				agregarUsuario();
+				
+			}
+		});
+		
+		btnGuardar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guardarUsuario();				
+			}
+		});
+		
+		btnEliminar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eliminarUsuario();
+				
+			}
+		});
+		
+		this.addWindowListener(new WindowAdapter() {
 
-		 		
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	try {
+					con.close();
+				} catch (Exception e1) {
+					System.out.println("No ha sido posible cerrar la coneión a la db.");
+				}
+                System.out.println("Ventana cerrada");
+                e.getWindow().dispose();
+            }
+		
+		});
 		
 		
 		this.add(lbClave);
@@ -101,11 +156,23 @@ public class Usuariogui extends JFrame{
 		
 		this.add(lbTipousuario);
 		this.add(cbTipousuario);
-
-
-
 		
 	}
+	
+	public void agregarUsuario() {
+		
+	}
+	
+	public void guardarUsuario() {
+		
+	}
+	
+	public void eliminarUsuario() {
+		// cambiar estado ='N'
+	}
+	
+	
+	
 	
 	
 	

@@ -30,8 +30,8 @@ public class App
     	uq.create(usuario);
     	*/
     	//Usuario u = new Usuario();
-    	UsuarioQuery uq = new UsuarioQuery();
-    	uq.delete("pamela");
+    	//UsuarioQuery uq = new UsuarioQuery();
+    	//uq.delete("pamela");
     	//System.out.println(u.getUsuario() + " " + u.getClave() + " " + u.getNombre());
     	
     }
