@@ -1,4 +1,4 @@
-package cl.clase.view;
+package cl.fuentes.view;
 
 
 import java.awt.event.ActionEvent;

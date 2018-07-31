@@ -1,7 +1,7 @@
 package cl.fuentes.app;
 
-import cl.clase.view.Login;
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.view.Login;
 
 public class App{
 	

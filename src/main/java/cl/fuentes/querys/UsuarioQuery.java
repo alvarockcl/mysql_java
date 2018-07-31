@@ -1,10 +1,10 @@
-package cl.clase.querys;
+package cl.fuentes.querys;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import cl.clase.modelo.Usuario;
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.modelo.Usuario;
 
 public class UsuarioQuery implements Crud<Usuario>{
 

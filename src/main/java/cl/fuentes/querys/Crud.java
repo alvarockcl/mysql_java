@@ -1,4 +1,4 @@
-package cl.clase.querys;
+package cl.fuentes.querys;
 
 public interface Crud<T> {
 	

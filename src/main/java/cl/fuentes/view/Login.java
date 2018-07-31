@@ -1,4 +1,4 @@
-package cl.clase.view;
+package cl.fuentes.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import cl.clase.querys.LoginQuery;
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.querys.LoginQuery;
 
 public class Login extends JFrame{
 

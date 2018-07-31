@@ -1,4 +1,4 @@
-package cl.clase.querys;
+package cl.fuentes.querys;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

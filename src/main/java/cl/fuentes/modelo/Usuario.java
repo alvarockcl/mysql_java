@@ -1,4 +1,4 @@
-package cl.clase.modelo;
+package cl.fuentes.modelo;
 
 public class Usuario {
 

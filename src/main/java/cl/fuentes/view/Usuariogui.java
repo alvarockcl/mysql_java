@@ -1,4 +1,4 @@
-package cl.clase.view;
+package cl.fuentes.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import cl.clase.querys.UsuarioQuery;
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.querys.UsuarioQuery;
 
 public class Usuariogui extends JFrame{
   
