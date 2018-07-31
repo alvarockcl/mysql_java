@@ -18,7 +18,7 @@ import cl.fuentes.db.Mysqlconn;
 
 public class Usuariogui extends JFrame{
   
-	private Mysqlconn con;
+	private Mysqlconn conn;
 	private UsuarioQuery query;
 	
 	JLabel lbUsuario;
@@ -34,14 +34,9 @@ public class Usuariogui extends JFrame{
 	JComboBox<String> cbTipousuario;	
 	
 	
-	public Usuariogui() {
+	public Usuariogui(Mysqlconn con) {
 		super("Formulario Usuario");
-		con = new Mysqlconn("localhost", "ventas", "usuventas", "usupassword");
-		try {
-			con.open();
-		} catch (Exception e) {
-			System.out.println("No se ha establecido la conexión a la db");
-		}
+		conn = con;
 		UsuarioQuery usuquery = new UsuarioQuery(con);
 		iniciarComponentes();
 	}
@@ -131,7 +126,7 @@ public class Usuariogui extends JFrame{
             public void windowClosing(WindowEvent e)
             {
             	try {
-					con.close();
+					conn.close();
 				} catch (Exception e1) {
 					System.out.println("No ha sido posible cerrar la coneión a la db.");
 				}
@@ -170,26 +165,6 @@ public class Usuariogui extends JFrame{
 	public void eliminarUsuario() {
 		// cambiar estado ='N'
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-	
-		Usuariogui ugui = new Usuariogui();
-		ugui.setVisible(true);
-	}
+
 
 }

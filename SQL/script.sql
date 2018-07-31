@@ -8,7 +8,8 @@ CREATE SCHEMA `ventas` DEFAULT CHARACTER SET utf8 ;
 USE ventas;
 
 -- Crear usuario base de datos
-CREATE USER usuventas IDENTIFIED BY 'passventas';
+DROP USER 'usuventas'@'localhost';
+CREATE USER 'usuventas'@'localhost' IDENTIFIED BY 'passventas';
 
 -- Dar privilegios
 grant usage on *.* to usuventas@localhost identified by 'passventas';
@@ -28,7 +29,7 @@ CREATE TABLE usuario(
 
 -- insertar datos
 INSERT INTO usuario (usuario, clave, nombre, tipousuario, estado) values
-('afuentes','1234','Administrador','Alvaro Fuentes','V');
+('admin','1234','Administrador','Alvaro Fuentes','V');
 
 -- Permitir mysql operaciones update
 SET SQL_SAFE_UPDATES = 0;
