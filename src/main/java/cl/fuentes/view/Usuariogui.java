@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.modelo.Usuario;
 import cl.fuentes.querys.UsuarioQuery;
 
 public class Usuariogui extends JFrame{
@@ -31,13 +34,15 @@ public class Usuariogui extends JFrame{
 	JButton btnGuardar;
 	JButton btnEliminar;
 	JLabel lbTipousuario;
-	JComboBox<String> cbTipousuario;	
+	JComboBox<String> cbTipousuario;
+	JButton btnBuscar;
 	
+	UsuarioQuery usuquery;
 	
 	public Usuariogui(Mysqlconn con) {
 		super("Formulario Usuario");
 		conn = con;
-		UsuarioQuery usuquery = new UsuarioQuery(con);
+		usuquery = new UsuarioQuery(con);
 		iniciarComponentes();
 	}
 	
@@ -79,9 +84,22 @@ public class Usuariogui extends JFrame{
 		btnEliminar.setLocation(200, 180);
 		btnEliminar.setSize(80, 20);
 		
+		btnBuscar = new JButton("Leer");
+		btnBuscar.setLocation(250, 20);
+		btnBuscar.setSize(100, 20);
+		btnBuscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buscarUsuario();
+			}
+		});
+		
+		
+		
 		lbTipousuario = new JLabel("Tipo usuario");
 		lbTipousuario.setLocation(20,140);
 		lbTipousuario.setSize(100, 20);
+		
 
 		
 		Vector<String> tipousuario = new Vector<String>();
@@ -121,12 +139,12 @@ public class Usuariogui extends JFrame{
 		});
 		
 		this.addWindowListener(new WindowAdapter() {
-
+        
             @Override
             public void windowClosing(WindowEvent e)
             {
             	try {
-					conn.close();
+					//conn.close();
 				} catch (Exception e1) {
 					System.out.println("No ha sido posible cerrar la coneión a la db.");
 				}
@@ -151,20 +169,48 @@ public class Usuariogui extends JFrame{
 		
 		this.add(lbTipousuario);
 		this.add(cbTipousuario);
+		this.add(btnBuscar);
 		
 	}
 	
 	public void agregarUsuario() {
-		
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(txtUsuario.getText());
+		String clave = new String(txtPassword.getPassword());
+		usuario.setClave(clave);
+		usuario.setNombre(txtNombre.getText());
+		usuario.setTipousuario(cbTipousuario.getSelectedItem().toString());
+		usuario.setEstado("V"); // usuario vigente
+		usuquery.create(usuario);
+		System.out.println("Usuario creado.");
+		JOptionPane.showMessageDialog(this, "Usuario creado",
+				"Información",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void guardarUsuario() {
-		
+		Usuario usuario = new Usuario();
+		String clave = new String(txtPassword.getPassword());
+		usuario.setClave(clave);
+		usuario.setTipousuario(cbTipousuario.getSelectedItem().toString());
+		usuquery.update(usuario);
+		JOptionPane.showMessageDialog(this, "Usuario modificado",
+				"Información",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void eliminarUsuario() {
 		// cambiar estado ='N'
+		usuquery.delete(txtUsuario.getText());
+		JOptionPane.showMessageDialog(this, "Usuario eliminado",
+				"Información",JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	public void buscarUsuario() {
+		//Usuario usuario = new Usuario();
+		Usuario usuario = usuquery.read(txtUsuario.getText());
+		txtUsuario.setText(usuario.getUsuario());
+		txtNombre.setText(usuario.getNombre());
+		txtPassword.setText(usuario.getClave());
+		cbTipousuario.setSelectedItem(usuario.getTipousuario());
+	}
 
 }

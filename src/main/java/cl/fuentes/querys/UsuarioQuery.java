@@ -42,15 +42,15 @@ public class UsuarioQuery implements Crud<Usuario>{
 			ResultSet rs = con.ejecutarQuery("select * from usuario"
 					+ " where usuario = '"
 					+ valor +"'");
-			//while (rs.next()) {
-				usuario.setIdusuario(rs.getInt(0));
-				usuario.setUsuario(rs.getString(1));
-				usuario.setClave(rs.getString(2));
-				usuario.setNombre(rs.getString(3));
-				usuario.setTipousuario(rs.getString(4));
-				usuario.setEstado(rs.getString(5));
+			while (rs.next()) {
+				usuario.setIdusuario(rs.getInt(1));
+				usuario.setUsuario(rs.getString(2));
+				usuario.setClave(rs.getString(3));
+				usuario.setNombre(rs.getString(4));
+				usuario.setTipousuario(rs.getString(5));
+				usuario.setEstado(rs.getString(6));
 				
-	        //}
+	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -60,17 +60,18 @@ public class UsuarioQuery implements Crud<Usuario>{
 	@Override
 	public void update(Usuario objeto) {
 		// update usuario set clave = '1234' where usuario = 'pamela';
+		// update usuario set clave = '1234', tipousuario = 'Operador' where usuario = 'vendedor';
 		try {
 			con.ejecutarUpdate("update usuario"
 								+ " set clave = '"
 								+objeto.getClave()
-								+", tipousuario = '"
+								+"' , tipousuario = '"
 								+objeto.getTipousuario()+"'"
-								+", estado = '"
-								+objeto.getEstado()+"' "
-								+"' where usuario = '"
+								+" where usuario = '"
 								+objeto.getUsuario()
 								+"'");
+			
+			System.out.println("tipo : " + objeto.getTipousuario());
 		} catch (SQLException e) {
 			
 			System.out.println(e.getMessage());
@@ -82,7 +83,9 @@ public class UsuarioQuery implements Crud<Usuario>{
 	public void delete(String valor) {
 		// 
 		try {
-			con.ejecutarUpdate("delete from usuario where usuario = '"+ valor +"'");
+			//con.ejecutarUpdate("delete from usuario where usuario = '"+ valor +"'");
+			String txt = "update usuario set estado = 'N' where usuario ='" + valor + "'";
+			con.ejecutarUpdate(txt);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
