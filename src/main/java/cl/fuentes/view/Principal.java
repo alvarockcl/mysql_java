@@ -66,7 +66,7 @@ public class Principal extends JFrame {
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	        mb=new JMenuBar();  
-	        menu=new JMenu("PGestion");  
+	        menu=new JMenu("Gestión");  
 	        i1=new JMenuItem("Usuarios"); 
 	        i1.addActionListener(new ActionListener(){
 	            public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,8 @@ public class Principal extends JFrame {
 	       
 	    }
 	    public void proceso3(){
-	       
+	       Productogui producto = new Productogui(conn);
+	       producto.setVisible(true);
 	    }        
 	
 	public void abrirUsuariogui(){

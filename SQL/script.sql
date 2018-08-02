@@ -34,5 +34,39 @@ INSERT INTO usuario (usuario, clave, nombre, tipousuario, estado) values
 -- Permitir mysql operaciones update
 SET SQL_SAFE_UPDATES = 0;
 -- ***********************************************************************************
+create table cliente(
+	codcliente int NOT NULL AUTO_INCREMENT,
+    nombrecliente varchar(100),
+    tipocliente varchar(10),
+    primary key(codcliente)
+);
+insert into cliente (nombrecliente, tipocliente)
+values ('Alvaro Fuentes','vip');
+insert into cliente (nombrecliente, tipocliente)
+values ('Carla Gonzalez','normal');
+
+create table producto(
+	codproducto int NOT NULL AUTO_INCREMENT,
+    producto varchar(100),
+    precio int(9),
+    primary key (codproducto)
+);
+insert into producto (producto, precio)
+values ('Escritorio',150000);
+insert into producto (producto, precio)
+values ('Silla',55000);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
