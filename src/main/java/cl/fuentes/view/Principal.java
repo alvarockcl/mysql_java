@@ -9,7 +9,14 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.sun.xml.internal.fastinfoset.tools.SAXEventSerializer;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import cl.fuentes.db.Mysqlconn;
 
@@ -17,6 +24,9 @@ public class Principal extends JFrame {
 
 	JButton btnUsuariogui;
 	private Mysqlconn conn;
+	  JMenu menu, submenu;  
+	    JMenuItem i1, i2, i3, i4, i5;          
+	    JMenuBar mb;
 	
 	public Principal(Mysqlconn con) {
 		super("Principal");
@@ -47,8 +57,51 @@ public class Principal extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.add(btnUsuariogui);
+		//this.add(btnUsuariogui);
+		
+		 this.setTitle("Sistema Ventas");
+	        this.setLayout(null);
+	        this.setSize(800, 150);
+	        this.setLocationRelativeTo(null);
+	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        mb=new JMenuBar();  
+	        menu=new JMenu("PGestion");  
+	        i1=new JMenuItem("Usuarios"); 
+	        i1.addActionListener(new ActionListener(){
+	            public void actionPerformed(ActionEvent e) {
+	                proceso1();        
+	            }
+	        });
+	        i2=new JMenuItem("Clientes");  
+	        i2.addActionListener(new ActionListener(){
+	            public void actionPerformed(ActionEvent e) {
+	                proceso2();        
+	            }
+	        });
+	        i3=new JMenuItem("Productos");  
+	        i3.addActionListener(new ActionListener(){
+	            public void actionPerformed(ActionEvent e) {
+	                proceso3();        
+	            }
+	        }); 
+	        menu.add(i1);
+	        menu.add(i2);
+	        menu.add(i3);  
+	        mb.add(menu); 
+	        this.setJMenuBar(mb);
+	        this.setBackground(Color.white);
 	}
+	
+	  public void proceso1(){
+		  abrirUsuariogui();
+	    }
+	    public void proceso2(){
+	       
+	    }
+	    public void proceso3(){
+	       
+	    }        
 	
 	public void abrirUsuariogui(){
 		Usuariogui ugui = new Usuariogui(conn);
