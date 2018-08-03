@@ -56,7 +56,15 @@ values ('Escritorio',150000);
 insert into producto (producto, precio)
 values ('Silla',55000);
 
-
+create table venta(
+	numdocumento int NOT NULL AUTO_INCREMENT,
+    fechadocumento date,
+    cantidad int,
+    codproducto int,
+    codcliente int,
+	totalventa int(9),
+    primary key (numdocumento)
+);
 
 
 

@@ -22,6 +22,8 @@ public class Productogui extends JFrame{
 	JTextField txtPrecio;
 	JButton btnAgregar;
 	ProductoQuery pq;
+	JButton btnBuscar;
+	JButton btnGuardar;
 	
 	
 	public Productogui(Mysqlconn con) {
@@ -34,7 +36,7 @@ public class Productogui extends JFrame{
 		this.setTitle("Producto");
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
-		this.setSize(400, 300);
+		this.setSize(400, 250);
 		
 		lbProducto = new JLabel("Producto");
 		lbProducto.setLocation(20,20);
@@ -65,11 +67,36 @@ public class Productogui extends JFrame{
 			}
 		});
 		
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setLocation(240, 20);
+		btnBuscar.setSize(100,20);
+		btnBuscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buscarProducto();
+				
+			}
+		});
+		
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setLocation(240, 140);
+		btnGuardar.setSize(100,20);
+		btnGuardar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guardarProducto();
+				
+			}
+		});
+		
+		
 		this.add(btnAgregar);
 		this.add(lbPrecio);
 		this.add(lbProducto);
 		this.add(txtPrecio);
 		this.add(txtProducto);
+		this.add(btnBuscar);
+		this.add(btnGuardar);
 	}
 	
 	public void agregarProducto() {
@@ -81,5 +108,18 @@ public class Productogui extends JFrame{
 				"Información",JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public void buscarProducto() {
+		Producto producto = new Producto();
+		producto = pq.read(txtProducto.getText());
+		txtPrecio.setText(String.valueOf(producto.getPrecio()));
+		
+	}
+	
+	public void guardarProducto() {
+		pq.update(new Producto(0, txtProducto.getText(), 
+				Integer.parseInt(txtPrecio.getText())));
+		JOptionPane.showMessageDialog(this, "Producto actualizado",
+				"Información",JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 }

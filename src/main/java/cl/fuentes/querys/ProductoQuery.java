@@ -1,5 +1,6 @@
 package cl.fuentes.querys;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import cl.fuentes.db.Mysqlconn;
@@ -29,14 +30,30 @@ public class ProductoQuery implements Crud<Producto>{
 
 	@Override
 	public Producto read(String valor) {
-		// TODO Auto-generated method stub
-		return null;
+		Producto producto = new Producto();
+		String txtsql ="select producto, precio from producto where producto = '" + valor + "'";
+		try {
+			ResultSet rs = con.ejecutarQuery(txtsql);
+			while (rs.next()) {
+				producto.setProducto(rs.getString(1));
+				producto.setPrecio(rs.getInt(2));
+	        }
+		} catch (SQLException e) {
+			System.out.println("No es posible traer producto");
+			
+		}
+	   return producto;
 	}
 
 	@Override
 	public void update(Producto objeto) {
-		// TODO Auto-generated method stub
-		
+		String txtsql = "update producto set precio = " 
+		+ objeto.getPrecio() + " where producto ='" + objeto.getProducto() + "'";
+		try {
+			con.ejecutarUpdate(txtsql);
+		} catch (SQLException e) {
+			System.out.println("No se puede actualizar producto");
+		}
 	}
 
 	@Override
