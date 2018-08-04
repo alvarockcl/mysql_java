@@ -75,6 +75,9 @@ public class Login extends JFrame{
             }            
         });
 		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 		this.add(txtUsuario);
 		this.add(txtClave);
 		this.add(btnLogin);

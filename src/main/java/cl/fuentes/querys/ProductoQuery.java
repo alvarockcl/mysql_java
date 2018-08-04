@@ -17,7 +17,8 @@ public class ProductoQuery implements Crud<Producto>{
 	@Override
 	public void create(Producto objeto) {
 		String txtsql = "insert into producto"
-				+ " (producto, precio) values ('"+objeto.getProducto()+"',"+objeto.getPrecio()+")";
+				+ " (producto, precio, stock) values"
+				+ " ('"+objeto.getProducto()+"',"+objeto.getPrecio()+","+objeto.getStock()+")";
 		try {
 			con.ejecutarUpdate(txtsql);
 			//con.close();
@@ -31,12 +32,13 @@ public class ProductoQuery implements Crud<Producto>{
 	@Override
 	public Producto read(String valor) {
 		Producto producto = new Producto();
-		String txtsql ="select producto, precio from producto where producto = '" + valor + "'";
+		String txtsql ="select producto, precio, stock from producto where producto = '" + valor + "'";
 		try {
 			ResultSet rs = con.ejecutarQuery(txtsql);
 			while (rs.next()) {
 				producto.setProducto(rs.getString(1));
 				producto.setPrecio(rs.getInt(2));
+				producto.setStock(rs.getInt(3));
 	        }
 		} catch (SQLException e) {
 			System.out.println("No es posible traer producto");
@@ -47,8 +49,12 @@ public class ProductoQuery implements Crud<Producto>{
 
 	@Override
 	public void update(Producto objeto) {
-		String txtsql = "update producto set precio = " 
-		+ objeto.getPrecio() + " where producto ='" + objeto.getProducto() + "'";
+		String txtsql = "update producto set precio = "
+				+ objeto.getPrecio() 
+				+ ", stock = "
+				+ objeto.getStock()
+				+ " where producto ='" 
+				+ objeto.getProducto() + "'";
 		try {
 			con.ejecutarUpdate(txtsql);
 		} catch (SQLException e) {

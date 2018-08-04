@@ -3,22 +3,24 @@ package cl.fuentes.querys;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sun.org.apache.xpath.internal.axes.OneStepIterator;
+
 import cl.fuentes.db.Mysqlconn;
 import cl.fuentes.modelo.Usuario;
 
 public class UsuarioQuery implements Crud<Usuario>{
 
-	private Mysqlconn con;
+	private Mysqlconn conn;
 	
 	public UsuarioQuery(Mysqlconn con){
-		this.con = con;
+		this.conn = con;
 	}
 	
 	@Override
 	public void create(Usuario objeto) {
 		// insert into usuario values ('admin','1234','Administrador');
 		try {
-			con.ejecutarUpdate("insert into usuario"
+			conn.ejecutarUpdate("insert into usuario"
 					+ " (usuario, clave, nombre,"
 					+ " tipousuario, estado)"
 					+ " values ('" 
@@ -39,7 +41,7 @@ public class UsuarioQuery implements Crud<Usuario>{
 		// select * from usuario where usuario = 'pamela';
 		Usuario usuario = new Usuario();
 		try {
-			ResultSet rs = con.ejecutarQuery("select * from usuario"
+			ResultSet rs = conn.ejecutarQuery("select * from usuario"
 					+ " where usuario = '"
 					+ valor +"'");
 			while (rs.next()) {
@@ -61,22 +63,23 @@ public class UsuarioQuery implements Crud<Usuario>{
 	public void update(Usuario objeto) {
 		// update usuario set clave = '1234' where usuario = 'pamela';
 		// update usuario set clave = '1234', tipousuario = 'Operador' where usuario = 'vendedor';
+		String txtsql = "update usuario set clave = '" 
+				+ objeto.getClave() 
+				+ "', nombre = '"
+				+ objeto.getNombre()  
+				+ "', tipousuario = '" 
+				+ objeto.getTipousuario() 
+				+ "' where usuario = '" 
+				+ objeto.getUsuario() + "'"; 
+				
+		
 		try {
-			con.ejecutarUpdate("update usuario"
-								+ " set clave = '"
-								+objeto.getClave()
-								+"' , tipousuario = '"
-								+objeto.getTipousuario()+"'"
-								+" where usuario = '"
-								+objeto.getUsuario()
-								+"'");
-			
-			System.out.println("tipo : " + objeto.getTipousuario());
+			conn.ejecutarUpdate(txtsql);
+			//System.out.println("tipo : " + objeto.getTipousuario());
+			System.out.println(txtsql);
 		} catch (SQLException e) {
-			
 			System.out.println(e.getMessage());
 		}
-		
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public class UsuarioQuery implements Crud<Usuario>{
 		try {
 			//con.ejecutarUpdate("delete from usuario where usuario = '"+ valor +"'");
 			String txt = "update usuario set estado = 'N' where usuario ='" + valor + "'";
-			con.ejecutarUpdate(txt);
+			conn.ejecutarUpdate(txt);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

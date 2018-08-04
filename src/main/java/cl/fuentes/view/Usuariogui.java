@@ -190,6 +190,8 @@ public class Usuariogui extends JFrame{
 	public void guardarUsuario() {
 		Usuario usuario = new Usuario();
 		String clave = new String(txtPassword.getPassword());
+		usuario.setUsuario(txtUsuario.getText());
+		usuario.setNombre(txtNombre.getText());
 		usuario.setClave(clave);
 		usuario.setTipousuario(cbTipousuario.getSelectedItem().toString());
 		usuquery.update(usuario);
@@ -205,7 +207,6 @@ public class Usuariogui extends JFrame{
 	}
 
 	public void buscarUsuario() {
-		//Usuario usuario = new Usuario();
 		Usuario usuario = usuquery.read(txtUsuario.getText());
 		txtUsuario.setText(usuario.getUsuario());
 		txtNombre.setText(usuario.getNombre());

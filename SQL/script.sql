@@ -49,12 +49,13 @@ create table producto(
 	codproducto int NOT NULL AUTO_INCREMENT,
     producto varchar(100),
     precio int(9),
+    stock int,
     primary key (codproducto)
 );
-insert into producto (producto, precio)
-values ('Escritorio',150000);
-insert into producto (producto, precio)
-values ('Silla',55000);
+insert into producto (producto, precio, stock)
+values ('Escritorio',150000, 100);
+insert into producto (producto, precio, stock)
+values ('Silla',55000, 50);
 
 create table venta(
 	numdocumento int NOT NULL AUTO_INCREMENT,
