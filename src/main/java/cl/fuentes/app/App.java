@@ -1,6 +1,7 @@
 package cl.fuentes.app;
 
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.tool.Configfile;
 import cl.fuentes.view.Login;
 
 
@@ -13,7 +14,9 @@ public class App{
 	private Mysqlconn con;
 	
 	public App() {
-		con = new Mysqlconn("localhost", "ventas", "usuventas", "passventas");
+    	Configfile cf = new Configfile();
+		con = new Mysqlconn(cf.leerConfig("server"), cf.leerConfig("basedatos"), cf.leerConfig("usuario"), cf.leerConfig("password"));
+		//cf = null;
 		try {
 			con.open();
 		} catch (Exception e) {
@@ -22,6 +25,13 @@ public class App{
 	}
 	
     public void iniciar(){
+    	/*
+    	Configfile cf = new Configfile();
+    	cf.guardarConfig("server", "localhost");
+    	cf.guardarConfig("basedatos", "ventas");
+    	cf.guardarConfig("usuario", "usuventas");
+    	cf.guardarConfig("password", "passventas");
+    	*/
     	Login login = new Login(con);
     	login.setVisible(true);
     }
