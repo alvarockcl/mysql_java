@@ -3,9 +3,7 @@ package cl.fuentes.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,12 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import cl.fuentes.db.Mysqlconn;
 import cl.fuentes.modelo.Producto;
 import cl.fuentes.querys.ProductoQuery;
+import cl.fuentes.tool.Comun;
 
 public class Productogui extends JFrame{
 
@@ -51,6 +48,8 @@ public class Productogui extends JFrame{
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.setSize(500, 450);
+		
+		this.setResizable(false);
 		
 		lbProducto = new JLabel("Producto");
 		lbProducto.setLocation(20,20);
@@ -114,7 +113,7 @@ public class Productogui extends JFrame{
 		// Inicio grilla
 		try {
 			rsGrilla = conn.ejecutarQuery(txtsql);
-			table = new JTable(buildTableModel(rsGrilla));
+			table = new JTable(Comun.CrearTableModel(rsGrilla));
 		} catch (SQLException e1) {
 		}
 		table.setSize(400, 150);
@@ -167,32 +166,11 @@ public class Productogui extends JFrame{
 		JOptionPane.showMessageDialog(this, "Producto actualizado",
 				"Información",JOptionPane.INFORMATION_MESSAGE);
 	}
-	
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
-	
-		ResultSetMetaData metaData = rs.getMetaData();
-   
-	    Vector<String> columnNames = new Vector<String>();
-	    int columnCount = metaData.getColumnCount();
-	    for (int column = 1; column <= columnCount; column++) {
-	        columnNames.add(metaData.getColumnName(column));
-	    }
 
-	    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-	    while (rs.next()) {
-	        Vector<Object> vector = new Vector<Object>();
-	        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-	            vector.add(rs.getObject(columnIndex));
-	        }
-	        data.add(vector);
-	    }
-	    return new DefaultTableModel(data, columnNames);
-	}
-	
 	public void actualizarGrilla() {
 		try {
 			rsGrilla = conn.ejecutarQuery(txtsql);
-			table.setModel(buildTableModel(rsGrilla));
+			table.setModel(Comun.CrearTableModel(rsGrilla));
 		} catch (SQLException e) {
 			
 		}

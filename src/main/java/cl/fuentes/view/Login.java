@@ -38,6 +38,9 @@ public class Login extends JFrame{
 		
 		this.setLayout(null);
 		this.setSize(300, 200);
+		
+		this.setResizable(false);
+		
 		this.setLocationRelativeTo(null); // centra la ventana
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e){

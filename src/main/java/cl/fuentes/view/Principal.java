@@ -63,6 +63,9 @@ public class Principal extends JFrame {
 	        this.setLayout(null);
 	        this.setSize(800, 150);
 	        this.setLocationRelativeTo(null);
+	        
+	        this.setResizable(false);
+	        
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	        mb=new JMenuBar();  

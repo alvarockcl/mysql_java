@@ -3,6 +3,11 @@ package cl.fuentes.app;
 import cl.fuentes.db.Mysqlconn;
 import cl.fuentes.view.Login;
 
+
+// Proyecto para la clase de Java Básico
+// Por Alvaro Fuentes P.
+// Email: alvarofue@gmail.com
+
 public class App{
 	
 	private Mysqlconn con;

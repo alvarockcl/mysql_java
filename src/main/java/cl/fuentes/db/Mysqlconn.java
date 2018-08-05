@@ -8,6 +8,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//Proyecto para la clase de Java Básico
+//Por Alvaro Fuentes P.
+//Email: alvarofue@gmail.com
 
 public class Mysqlconn {
 
@@ -54,6 +57,50 @@ public class Mysqlconn {
     	preparedStatement.executeUpdate();
     	System.out.println("Query actualizada");
 
+    }
+    
+    public ResultSet ejecutarqueryStatement(PreparedStatement ps) {
+
+    	/* Ejemplo PreparedStatement
+    	 
+    	PreparedStatement ps = null;
+    	String txtsql = "select * from usuario where codusuario = ?  and usuario = ? and tipousuario = ?";
+    	ps = connect.prepareStatement(txtsql);
+    	ps.setInt(1, 1);  
+    	ps.setString(2, "Admin"); 
+    	ps.setString(3, "Vip"); 
+    	rs = ps.executeUpdate();
+    	
+    	*/
+    	
+    	ResultSet rs = null;
+		try {
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+    	return rs;
+    }
+
+    public void ejecutarupdateStatement(PreparedStatement ps) {
+
+    	/* Ejemplo PreparedStatement
+   	 
+    	PreparedStatement ps = null;
+    	String txtsql = "select * from usuario where codusuario = ?  and usuario = ? and tipousuario = ?";
+    	ps = connect.prepareStatement(txtsql);
+    	ps.setInt(1, 1);  
+    	ps.setString(2, "Admin"); 
+    	ps.setString(3, "Vip"); 
+    	rs = ps.executeUpdate();
+    	
+    	*/
+    	
+		try {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
     }
     
     public void close() throws Exception{

@@ -52,6 +52,8 @@ public class Usuariogui extends JFrame{
 		
 		this.setSize(400, 300);
 		
+		this.setResizable(false);
+		
 		lbUsuario = new JLabel("Usuario");
 		lbUsuario.setLocation(20, 20);
 		lbUsuario.setSize(100, 20);
