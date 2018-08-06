@@ -67,6 +67,11 @@ create table venta(
     primary key (numdocumento)
 );
 
+-- Establecer relaciones entre las tablas
+
+alter table venta add foreign key(codproducto) references producto(codproducto);
+alter table venta add foreign key(codcliente) references cliente(codcliente);
+
 
 
 

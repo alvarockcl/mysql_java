@@ -88,9 +88,16 @@ public class Principal extends JFrame {
 	                proceso3();        
 	            }
 	        }); 
+	        i4=new JMenuItem("Ventas");  
+	        i4.addActionListener(new ActionListener(){
+	            public void actionPerformed(ActionEvent e) {
+	                proceso4();        
+	            }
+	        });	        
 	        menu.add(i1);
 	        menu.add(i2);
 	        menu.add(i3);  
+	        menu.add(i4);
 	        mb.add(menu); 
 	        this.setJMenuBar(mb);
 	        this.setBackground(Color.white);
@@ -106,6 +113,10 @@ public class Principal extends JFrame {
 	       Productogui producto = new Productogui(conn);
 	       producto.setVisible(true);
 	    }        
+	    public void proceso4(){
+		       Ventagui venta = new Ventagui(conn);
+		       venta.setVisible(true);
+		}	    
 	
 	public void abrirUsuariogui(){
 		Usuariogui ugui = new Usuariogui(conn);

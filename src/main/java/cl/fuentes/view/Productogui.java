@@ -31,6 +31,7 @@ public class Productogui extends JFrame{
 	ProductoQuery pq;
 	JButton btnBuscar;
 	JButton btnGuardar;
+
 	JTable table;
 	JScrollPane scrollPane;
 	ResultSet rsGrilla;
