@@ -1,5 +1,7 @@
 package cl.fuentes.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,9 +59,6 @@ public class Ventagui extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setSize(550, 450);
 		
-		
-		
-		
 		this.setResizable(false);
 		
 		lbCodCliente = new JLabel("Cod Cliente");
@@ -89,6 +88,12 @@ public class Ventagui extends JFrame{
 		btnLeerCliente = new JButton("Leer");
 		btnLeerCliente.setLocation(240, 20);
 		btnLeerCliente.setSize(100,20);
+		btnLeerCliente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				leerCliente();
+			}
+		});
 		
 		lbCodProducto = new JLabel("Cod Producto");
 		lbCodProducto.setLocation(20, 130);
@@ -109,16 +114,29 @@ public class Ventagui extends JFrame{
 		btnAgregarCompra = new JButton("Agregar Carrito");
 		btnAgregarCompra.setLocation(370, 130);
 		btnAgregarCompra.setSize(150,20);
+		btnAgregarCompra.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				agregarCarrito();
+			}
+		});
 		
 		carroCompra = new ArrayList<Carrito>();
-		//carroCompra.add(new Carrito(1, "PC", 350000));
+
+		//carroCompra.add(new Carrito(1, "PC", 3 ,350000));
 		//carroCompra.clear();
-		Object columnas[] = {"COD PROD","PRODUCO","PRECIO"};
+		
+		/*
+		Object columnas[] = {"COD PROD","PRODUCO","CANTIDAD","PRECIO"};
 		tableModel = new DefaultTableModel(columnas,0);
 		for(int i=0 ; i < carroCompra.size() ; i++){
-			tableModel.addRow(new Object[] {carroCompra.get(i).getCodproducto(), carroCompra.get(i).getProducto(), carroCompra.get(i).getPrecio()});
-		}		
-		table = new JTable(tableModel);
+			tableModel.addRow(new Object[] {carroCompra.get(i).getCodproducto(), carroCompra.get(i).getProducto(), carroCompra.get(i).getCantidad(),carroCompra.get(i).getPrecio()});
+		}
+		*/
+
+		//table = new JTable(TablemodelGrilla(carroCompra));
+		table = new JTable();
+		table.setModel(TablemodelGrilla(carroCompra));
 		table.setSize(400, 150);
 		table.setRowHeight(20);
 
@@ -126,7 +144,6 @@ public class Ventagui extends JFrame{
 		scrollPane.setLocation(20, 180);
 		scrollPane.setSize(400, 150);
 		scrollPane.setViewportView(table);
-		
 		
 		this.add(lbCodCliente);
 		this.add(lbCliente);
@@ -143,5 +160,28 @@ public class Ventagui extends JFrame{
 		this.add(scrollPane);
 		
 	}
+	
+	public DefaultTableModel TablemodelGrilla(List<Carrito> cc) {
+		Object columnas[] = {"COD PROD","PRODUCO","CANTIDAD","PRECIO"};
+		DefaultTableModel tm = new DefaultTableModel(columnas,0);
+		for(int i=0 ; i < cc.size() ; i++){
+			tm.addRow(new Object[] {cc.get(i).getCodproducto(), cc.get(i).getProducto(), cc.get(i).getCantidad(), cc.get(i).getPrecio()});
+		}
+		return tm;
+	}
+	
+	public void agregarCarrito() {
+		carroCompra.add(new Carrito(1, "PC", 3, 350000));
+		
+		
+		table.setModel(TablemodelGrilla(carroCompra));
+	}
+	
+	public void leerCliente() {
+		
+		
+	}
+	
+	
 	
 }
