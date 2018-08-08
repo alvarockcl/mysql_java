@@ -45,6 +45,7 @@ values ('Alvaro Fuentes','vip');
 insert into cliente (nombrecliente, tipocliente)
 values ('Carla Gonzalez','normal');
 
+drop table producto;
 create table producto(
 	codproducto int NOT NULL AUTO_INCREMENT,
     producto varchar(100),
@@ -57,6 +58,8 @@ values ('Escritorio',150000, 100);
 insert into producto (producto, precio, stock)
 values ('Silla',55000, 50);
 
+use ventas;
+drop table venta;
 create table venta(
 	numdocumento int NOT NULL AUTO_INCREMENT,
     fechadocumento date,

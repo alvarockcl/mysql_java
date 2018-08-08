@@ -3,28 +3,40 @@ package cl.fuentes.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import cl.fuentes.db.Mysqlconn;
+import cl.fuentes.querys.ClienteQuery;
+import cl.fuentes.querys.ProductoQuery;
 import cl.fuentes.querys.VentaQuery;
+import jdk.nashorn.internal.runtime.linker.JavaAdapterFactory;
 import cl.fuentes.modelo.Carrito;
+import cl.fuentes.modelo.Cliente;
+import cl.fuentes.modelo.Producto;
+import cl.fuentes.modelo.Venta;
 
 
 public class Ventagui extends JFrame{
 
 	Mysqlconn conn;
 	VentaQuery vq;
+	ClienteQuery cq;
+	ProductoQuery pq;
+	
 	
 	JTable table;
 	JScrollPane scrollPane;
@@ -46,10 +58,18 @@ public class Ventagui extends JFrame{
 	JTextField txtCantidad;
 	JButton btnAgregarCompra;
 	
+	JLabel lbTotal;
+	JTextField txtTotal;
+	
+	JButton btnGuardarVenta;
+	
 	
 	public Ventagui(Mysqlconn con) {
 		conn = con;
 		vq = new VentaQuery(conn);
+		cq = new ClienteQuery(conn);
+		pq = new ProductoQuery(conn);
+		
 		iniciarComponentes();
 	}
 
@@ -95,7 +115,7 @@ public class Ventagui extends JFrame{
 			}
 		});
 		
-		lbCodProducto = new JLabel("Cod Producto");
+		lbCodProducto = new JLabel("Producto");
 		lbCodProducto.setLocation(20, 130);
 		lbCodProducto.setSize(100,20);
 		
@@ -145,6 +165,28 @@ public class Ventagui extends JFrame{
 		scrollPane.setSize(400, 150);
 		scrollPane.setViewportView(table);
 		
+		lbTotal = new JLabel("Total");
+		lbTotal.setLocation(100, 350);
+		lbTotal.setSize(80,20);
+		
+		txtTotal = new JTextField();
+		txtTotal.setLocation(220, 350);
+		txtTotal.setSize(90, 20);
+		
+		btnGuardarVenta = new JButton("Guardar");
+		btnGuardarVenta.setLocation(340, 350);
+		btnGuardarVenta.setSize(100, 20);
+		btnGuardarVenta.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guardarVenta();
+				
+			}
+		});
+		
+		
+		
 		this.add(lbCodCliente);
 		this.add(lbCliente);
 		this.add(lbTipoCliente);
@@ -158,6 +200,9 @@ public class Ventagui extends JFrame{
 		this.add(txtCantidad);
 		this.add(btnAgregarCompra);
 		this.add(scrollPane);
+		this.add(lbTotal);
+		this.add(txtTotal);
+		this.add(btnGuardarVenta);
 		
 	}
 	
@@ -171,17 +216,46 @@ public class Ventagui extends JFrame{
 	}
 	
 	public void agregarCarrito() {
-		carroCompra.add(new Carrito(1, "PC", 3, 350000));
-		
-		
-		table.setModel(TablemodelGrilla(carroCompra));
+		//carroCompra.add(new Carrito(1, "PC", 3, 350000));
+		Producto producto = pq.read(txtCodProducto.getText()); // No confundir
+		Carrito carrito = new Carrito();
+		carrito.setCodproducto(producto.getCodproducto());
+		carrito.setProducto(producto.getProducto());
+		carrito.setPrecio(producto.getPrecio());
+		carrito.setCantidad(Integer.parseInt(txtCantidad.getText()));
+		//carroCompra.clear();
+		if(carroCompra.size() >= 1) {
+			JOptionPane.showMessageDialog(this, "Se permite una compra!!!",
+					"Información",JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			int cantidad = carrito.getCantidad();
+			int precio = carrito.getPrecio();
+			int resul = cantidad * precio;
+			txtTotal.setText(String.valueOf(resul));
+			carroCompra.add(carrito);
+			table.setModel(TablemodelGrilla(carroCompra));
+			
+		}
 	}
 	
 	public void leerCliente() {
-		
-		
+		Cliente cliente = cq.read(txtCodCliente.getText());
+		txtCliente.setText(cliente.getNombreCliente());
+		txtTipoCliente.setText(cliente.getTipoCliente());
 	}
-	
+
+	public void guardarVenta() {
+		Venta venta = new Venta();
+		Carrito carrito = carroCompra.get(0);
+		venta.setFechadocumento(java.sql.Date.valueOf(LocalDate.now()));
+		venta.setCantidad(carrito.getCantidad());
+		venta.setCodProducto(carrito.getCodproducto());
+		venta.setCodCliente(Integer.parseInt(txtCodCliente.getText()));
+		venta.setTotalVenta(Integer.parseInt(txtTotal.getText()));
+		vq.create(venta);
+		JOptionPane.showMessageDialog(this, "Venta guardada.",
+				"Información",JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 	
 }

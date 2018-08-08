@@ -16,13 +16,13 @@ public class VentaQuery implements Crud<Venta> {
 	
 	@Override
 	public void create(Venta objeto) {
-		String txtsql ="INSERT INTO ventas (fechadocumento,"
+		String txtsql ="INSERT INTO venta (fechadocumento,"
 				+ "cantidad,codproducto,codcliente,totalventa) VALUES ("
-				+ ""+objeto.getFechadocumento()
-				+""+objeto.getCantidad()
-				+""+objeto.getCodProducto()
-				+""+objeto.getCodCliente()
-				+""+objeto.getTotalVenta()+")";
+				+ "'"+objeto.getFechadocumento()
+				+"' ,"+objeto.getCantidad()
+				+","+objeto.getCodProducto()
+				+","+objeto.getCodCliente()
+				+","+objeto.getTotalVenta()+")";
 		try {
 			conn.ejecutarUpdate(txtsql);
 		} catch (SQLException e) {

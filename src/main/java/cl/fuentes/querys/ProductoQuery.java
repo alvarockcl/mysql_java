@@ -32,13 +32,15 @@ public class ProductoQuery implements Crud<Producto>{
 	@Override
 	public Producto read(String valor) {
 		Producto producto = new Producto();
-		String txtsql ="select producto, precio, stock from producto where producto = '" + valor + "'";
+		String txtsql ="select codproducto, producto, precio,"
+				+ " stock from producto where producto = '" + valor + "'";
 		try {
 			ResultSet rs = con.ejecutarQuery(txtsql);
 			while (rs.next()) {
-				producto.setProducto(rs.getString(1));
-				producto.setPrecio(rs.getInt(2));
-				producto.setStock(rs.getInt(3));
+				producto.setCodproducto(rs.getInt(1));
+				producto.setProducto(rs.getString(2));
+				producto.setPrecio(rs.getInt(3));
+				producto.setStock(rs.getInt(4));
 	        }
 		} catch (SQLException e) {
 			System.out.println("No es posible traer producto");
